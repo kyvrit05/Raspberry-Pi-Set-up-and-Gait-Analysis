@@ -27,3 +27,26 @@ main: loads the data into a csv. file
 
 stimulate heatmap: Simulates footstep pressure grid data and renders it as a heatmap, so you can test/verify the Raspberry Pi display pipeline BEFORE the real mat hardware is wired up.
 
+<p align="center">
+  <img width="500" alt="Screenshot 2026-09-04 013007" src="https://github.com/user-attachments/assets/38296c91-1f68-4cec-b21a-3e0d23458048" />
+</p>
+
+## Gait Classification (GaitNDD Dataset)
+
+Two Random Forest baselines for normal-vs-abnormal gait classification, trained on PhysioNet's [Gait in Neurodegenerative Disease Database](https://physionet.org/content/gaitndd/1.0.0/).
+
+- **`train.py`** — classifies individual strides using raw gait-timing features (stride interval, swing %, stance %, etc.).
+- **`train_subject_level.py`** — classifies whole subjects using aggregated variability features (mean/std/CV of stride timing, left-right asymmetry), evaluated with Leave-One-Subject-Out cross-validation.
+
+Aggregating to subject-level variability features substantially outperforms per-stride classification, since gait pathology shows up more in stride-to-stride *inconsistency* than in any single stride's raw values.
+
+### Project Outcome
+
+| Metric | `train.py` (per-stride) | `train_subject_level.py` (per-subject) |
+|---|---|---|
+| Accuracy | 67% | 86% |
+| ROC-AUC | 0.628 | 0.920 |
+| Abnormal — Precision / Recall / F1 | 87% / 71% / 78% | 90% / 92% / 91% |
+| Normal — Precision / Recall / F1 | 27% / 51% / 35% | 73% / 69% / 71% |
+
+Moving from per-stride to per-subject classification improved overall accuracy by **19 percentage points** and nearly doubled ROC-AUC discrimination, confirming that gait variability — not raw stride timing — is the stronger signal for detecting abnormal gait in this dataset.
