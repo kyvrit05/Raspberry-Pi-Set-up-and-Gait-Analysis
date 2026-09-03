@@ -19,7 +19,11 @@ If your Raspberry Pi 4 inside a DeskPi case fails to boot and displays a **solid
 
 The Raspberry Pi 4 (64-bit OS) serves as the primary edge computing node for this project. It is utilized to:
 * Run the Python-based data pipelines to **analyse and simulate human gait patterns**.
-* Preprocess streaming sensor data and **train the Convolutional Neural Network (CNN) model** directly on-device for real-time pattern recognition.
+* Preprocess streaming sensor data and **train the Random Forest Classifier model** directly on-device for real-time pattern recognition.
 
 The model trained and the codes are included in the repository :) 
+
+main: loads the data into a csv. file 
+
+stimulate heatmap: Simulates footstep pressure grid data and renders it as a heatmap, so you can test/verify the Raspberry Pi display pipeline BEFORE the real mat hardware is wired up.
 
